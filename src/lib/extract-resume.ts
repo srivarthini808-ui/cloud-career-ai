@@ -13,10 +13,8 @@ export async function extractResumeText(file: File): Promise<string> {
     return res.value;
   }
   if (name.endsWith(".pdf")) {
-    const pdfjs = await import("pdfjs-dist");
-    // Use CDN worker matching the installed version
-    // @ts-expect-error - version exported by pdfjs
-    const version = pdfjs.version as string;
+    const pdfjs = (await import("pdfjs-dist")) as typeof import("pdfjs-dist") & { version: string };
+    const version = pdfjs.version;
     pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${version}/build/pdf.worker.min.mjs`;
     const buf = await file.arrayBuffer();
     const doc = await pdfjs.getDocument({ data: buf }).promise;
