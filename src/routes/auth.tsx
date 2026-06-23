@@ -61,6 +61,22 @@ function AuthPage() {
     else toast.success("Check your inbox for reset instructions.");
   }
 
+  async function onGoogleSignIn() {
+    setBusy(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    setBusy(false);
+    if (result.error) {
+      toast.error(result.error.message || "Google sign-in failed");
+    }
+    if (result.redirected) {
+      return;
+    }
+    toast.success("Welcome!");
+    navigate({ to: "/dashboard" });
+  }
+
   return (
     <div className="min-h-screen hero-grid-bg grid place-items-center px-4">
       <Link to="/" className="absolute top-6 left-6 text-sm text-muted-foreground inline-flex items-center gap-1 hover:text-foreground">
