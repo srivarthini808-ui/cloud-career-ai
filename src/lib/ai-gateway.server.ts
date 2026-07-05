@@ -31,7 +31,7 @@ export async function callGemini(opts: {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
+      "Lovable-API-Key": key,
     },
     body: JSON.stringify(body),
   });
