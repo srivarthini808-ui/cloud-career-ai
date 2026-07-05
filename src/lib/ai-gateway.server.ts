@@ -15,6 +15,7 @@ export async function callGemini(opts: {
 }): Promise<string> {
   const key = process.env.LOVABLE_API_KEY;
   if (!key) throw new Error("LOVABLE_API_KEY missing");
+  if (!key.startsWith("sk_")) throw new Error("LOVABLE_API_KEY must start with 'sk_' prefix");
 
   const body: Record<string, unknown> = {
     model: opts.model ?? "google/gemini-2.5-flash",
